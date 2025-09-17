@@ -19,7 +19,9 @@ void remove_anomalies()
 {
 	int j = 0; // using for skipping the punct
 	int i; // for some unknown reason the program im using dont allow int in for so yeah
-	printf("enter you're text plz : ");
+	printf("==================================================\n\n");
+	printf("\nenter you're text plz : \n");
+	printf("==================================================\n\n");
 	fgets(text , sizeof(text) , stdin);
 	text[strcspn(text , "\n")] = '\0';// remove new line
 	strlwr(text);
@@ -68,6 +70,7 @@ void view()
 	int j = 0;
 	for(int i = 0 ; i < count_uni ; i++)
 	{
+		printf("==================================================\n\n");
 		printf("%s : %d ocurence , %d lenght \t", w1[i].word , w1[i].n , w1[i].len);
 		printf("positions [");
 		for(j = 0 ; j < w1[i].n ; j++)
@@ -75,14 +78,17 @@ void view()
 			printf("%d" , w1[i].position[j]);
             printf(",");
 		}
-		printf("]\n");
+		printf("]\n\n");
+		printf("==================================================\n\n");
 	}
 }
 void search_ex()
 {
     int j = 0;
     char search [100];
-    printf("put the word you want to search for :");
+	printf("==================================================\n\n");
+    printf("put the word you want to search for :\n");
+	printf("==================================================\n\n");
     fgets(search , sizeof(search) , stdin);
     search[strcspn(search , "\n")] = '\0';
     strlwr(search);
@@ -108,7 +114,7 @@ void search_ex()
                     printf(",");
 		        }
 		        printf("]\n");
-	           
+	           printf("==================================================\n\n");
                check = 1;
                break;
         }
@@ -122,7 +128,9 @@ void search_part()
 {
     int j = 0;
     char search [100];
+	printf("==================================================\n\n");
     printf("put the part of the word you want to search for :");
+	printf("==================================================\n\n");
     fgets(search , sizeof(search) , stdin);
     search[strcspn(search , "\n")] = '\0';
     strlwr(search);
@@ -139,7 +147,7 @@ void search_part()
         if(result != NULL)
         {    
             int j = 0;
-	        
+	        printf("=================================================\n\n");
 		        printf("%s : %d ocurence , %d lenght \t", w1[i].word , w1[i].n , w1[i].len);
 		        printf("positions [");
 		        for(j = 0 ; j < w1[i].n ; j++)
@@ -148,7 +156,7 @@ void search_part()
                     printf(",");
 		        }
 		        printf("]\n");
-	           
+	           printf("==================================================\n\n");
                check = 1;
                break;
         }
@@ -230,10 +238,13 @@ void Global_view()
 		if(w1[i].n > w1[c].n) c = i;
 	}
 	printf("total words are %d , there are %d unique words , the dv_le is %.2f and the len_moy is %.2f\n",lentot ,count_uni ,lx_dv ,len_m );
-	printf("the biggest lenght is %d \n the smallest is \n and the most frequente is \n");
+	printf("the biggest lenght is %d \n", w1[b].len);
+	printf("the smalliest lenght is %d \n", w1[a].len);
+	printf("the max frequency is %d \n", w1[c].n);
 }
 void palin()
 {
+	printf("==================================================\n\n");
 	
 	for(int i = 0 ; i < count_uni ; i++)
 	{
@@ -251,10 +262,54 @@ void palin()
 		else
 			printf("%s is not palindrum\n" , w1[i].word);
 	}
+	printf("==================================================\n\n");
 }
-void anna()
+void argonize(char word[] , char sort [])
 {
+	int lon = strlen(word);
+	for(int i = 0 ; i < lon ; i++)
+	{
+		sort[i] = word[i];
+	}
+	sort[lon] = '\0';
+	for(int i = 0 ; i < lon - 1; i++)
+	{
+		for(int j = 0 ; j < lon - 1 ; j++)
+		{
+			if(sort[j] > sort[j + 1])
+			{
+				char temp = sort[j];
+				sort[j] = sort [j + 1];
+				sort[j + 1] = temp;
+			}
+		}
+	}
+}
+void anna() 
+{
+	int i, j;
+    char sort1[50], sorted2[50];
+    int used[100] = {0};
+	printf("==================================================\n\n");
+    for (i = 0; i < count_uni; i++) {
+        if (used[i]) continue;
 
+        argonize(w1[i].word, sort1);
+        printf("\nAnagram group: %s", w1[i].word);
+        used[i] = 1;
+
+        for (j = i + 1; j < count_uni; j++) {
+            if (used[j]) continue;
+            argonize(w1[j].word, sorted2);
+
+            if (strcmp(sort1, sorted2) == 0) {
+                printf(", %s", w1[j].word);
+                used[j] = 1;
+            }
+        }
+        printf("\n");
+		printf("==================================================\n\n");
+    }
 }
 void stars()
 {
@@ -272,7 +327,8 @@ int main ()
 {
 	int choice = 0 ;
 	do{	
-		printf("choose a number from the following : \n");
+		printf("=================MENU===================\n\n");
+		printf("choose a number from the following : \n\n\n");
 		printf("choice 1 : Enter Text to Analyse\n");
 		printf("choice 2 : Show The Analysation\n");
 		printf("choice 3 : search for word\n");
@@ -282,6 +338,7 @@ int main ()
 		printf("choice 7 : annagrams\n");
 		printf("choice 8 : stars\n");
 		printf("choice 0 : Exit\n");
+		printf("=======================================\n\n");
 		scanf("%d" , &choice);
          while ((getchar()) != '\n');
 		switch(choice)
@@ -293,9 +350,11 @@ int main ()
 				view();
 				break;
 			case 3:
+				printf("==================================================\n\n");
 				printf("pick a search way\n");
 				int choice2;
 				printf("1 - search for word \n 2 - search for part\n choice :");
+				printf("==================================================\n\n");
 				scanf("%d" , &choice2);
 				while ((getchar()) != '\n');
 				switch (choice2)
@@ -308,14 +367,18 @@ int main ()
 						break;
 			
 					default:
+					printf("==================================================\n\n");
 						printf("error");
+						printf("==================================================\n\n");
 						break;
 				}
 				break;
 			case 4:
 				int choice3;
-				printf("1 - sort alphabticly \n 2 - sort by len\n sort by oc\n choce :");
+				printf("==================================================\n\n");
+				printf("1 - sort alphabticly \n 2 - sort by len\n  3 - sort by oc\n choce :");
 				scanf("%d" , &choice3);
+				printf("==================================================\n\n");
 				while ((getchar()) != '\n');
 				switch(choice3)
 				{
@@ -328,7 +391,9 @@ int main ()
 					case 3:
 						occ_sort();
 						break;
+						printf("==================================================\n\n");
 					default : printf("invalid input");
+
 				}
 				break;
 			case 5 :
@@ -349,6 +414,7 @@ int main ()
 				
 			default	: printf("invalid input try again.\n\n");		
 		}
+printf("==================================================\n\n");
 	}while(choice != 0);
 	return 0;
 	
