@@ -17,24 +17,23 @@ int count_uni = 0;// unique words
 
 void remove_anomalies()
 {
-	int j = 0; // using for skipping the punct
-	int i; // for some unknown reason the program im using dont allow int in for so yeah
+	int j = 0; 
+	int i; 
 	printf("==================================================\n\n");
 	printf("\nenter you're text plz : \n");
 	printf("==================================================\n\n");
 	fgets(text , sizeof(text) , stdin);
-	text[strcspn(text , "\n")] = '\0';// remove new line
+	text[strcspn(text , "\n")] = '\0';
 	strlwr(text);
 	for(i = 0 ; text[i] != '\0' ; i++)
 	{
 		if(!ispunct(text[i]))
 		{
-			text[j++] = text[i]; // skips puncts
+			text[j++] = text[i];
 		}
 		
 	}
 	text[j] = '\0';
-	// now punct and upper words are gone for good
 	
 	
 	char *split = strtok(text , " ");
@@ -111,7 +110,7 @@ void search_ex()
 		        for(j = 0 ; j < w1[i].n ; j++)
 		        {
 			        printf("%d" , w1[i].position[j]);
-                    printf(",");
+                    printf(" ");
 		        }
 		        printf("]\n");
 	           printf("==================================================\n\n");
@@ -158,7 +157,7 @@ void search_part()
 		        printf("]\n");
 	           printf("==================================================\n\n");
                check = 1;
-               break;
+               
         }
     }
     if (check == 0)
@@ -238,12 +237,13 @@ void Global_view()
 		if(w1[i].n > w1[c].n) c = i;
 	}
 	printf("total words are %d , there are %d unique words , the dv_le is %.2f and the len_moy is %.2f\n",lentot ,count_uni ,lx_dv ,len_m );
-	printf("the biggest lenght is %d \n", w1[b].len);
-	printf("the smalliest lenght is %d \n", w1[a].len);
-	printf("the max frequency is %d \n", w1[c].n);
+	printf("%s is the longest (%d) \n",w1[b].word , w1[b].len);
+	printf("%s is the smallest (%d) \n",w1[a].word , w1[a].len);
+	printf("%s is the most frequent (%d) \n",w1[c].word , w1[c].n);
 }
 void palin()
 {
+	int found = 0;
 	printf("==================================================\n\n");
 	
 	for(int i = 0 ; i < count_uni ; i++)
@@ -258,11 +258,12 @@ void palin()
 		if(isp)
 		{
 			printf("%s is palindrum\n" , w1[i].word);
+			found = 1;
 		}
-		else
-			printf("%s is not palindrum\n" , w1[i].word);
+		else;
 	}
 	printf("==================================================\n\n");
+	if(found == 0)printf("not found");
 }
 void argonize(char word[] , char sort [])
 {
@@ -315,10 +316,10 @@ void stars()
 {
 	for(int i = 0 ; i < count_uni ; i++)
 	{
-		printf("%s :", w1[i].word);
+		printf("%-15s :", w1[i].word);
 		for(int j = 0 ; j < w1[i].n ; j++)
 		{
-			printf("*");
+			printf(" (*) ");
 		}
 		printf("\n");
 	}
@@ -353,7 +354,7 @@ int main ()
 				printf("==================================================\n\n");
 				printf("pick a search way\n");
 				int choice2;
-				printf("1 - search for word \n 2 - search for part\n choice :");
+				printf("1 - search for word \n 2 - search for part\n choice :\n\n");
 				printf("==================================================\n\n");
 				scanf("%d" , &choice2);
 				while ((getchar()) != '\n');
